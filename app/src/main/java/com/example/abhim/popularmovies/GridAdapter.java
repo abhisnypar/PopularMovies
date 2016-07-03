@@ -25,7 +25,7 @@ public class GridAdapter extends BaseAdapter {
         String[] mNames = {"A team", "Inception", "GoneGirl", "Now you see me", "Creed", "Uncle", "Ramboo"};
         int[] imgList = {R.drawable.ateam, R.drawable.inception, R.drawable.gone_girl, R.drawable.nowyouseeme,
                 R.drawable.creed, R.drawable.uncle, R.drawable.ramboo};
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < mNames.length; i++) {
             list.add(new SingleRow(mNames[i], imgList[i]));
         }
     }
