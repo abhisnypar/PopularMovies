@@ -6,9 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.RatingBar;
 
 import java.util.ArrayList;
 
@@ -18,34 +16,22 @@ import java.util.ArrayList;
 public class FragmentMain extends Fragment {
 
     private GridView moviesGridView;
-    private RatingBar mUserRating;
+    private ArrayList<String> moviesProgram;
+    String[] mNames = {"A team", "Inception", "GoneGirl", "Now you see me", "Creed", "Uncle", "Ramboo"};
+    int[] imgList = {R.drawable.ateam, R.drawable.inception, R.drawable.gone_girl, R.drawable.nowyouseeme,
+            R.drawable.creed, R.drawable.uncle, R.drawable.ramboo};
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.mainfragment, container, false);
         moviesGridView = (GridView) rootView.findViewById(R.id.gridList_id);
-        mUserRating = (RatingBar)rootView.findViewById(R.id.ratingBar);
-        ArrayList<String> gridList = new ArrayList<String>();
-
-        gridList.add("The A team");
-        gridList.add("Inception");
-        gridList.add("Gone Girl");
-        gridList.add("Now you see me");
-        gridList.add("Creed");
-        gridList.add("Uncle");
-        gridList.add("Rambo");
-        gridList.add("Movies_empty");
-        gridList.add("Movies_empty");
-        gridList.add("Movies_empty");
-        gridList.add("Movies_empty");
-
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.grid_list_view, R.id.list_item_movies_textView, gridList);
+        GridAdapter adapter = new GridAdapter(getContext());
         moviesGridView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-
         return rootView;
+
+        
     }
 
 }
