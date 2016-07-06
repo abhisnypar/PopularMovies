@@ -5,11 +5,9 @@ package com.example.abhim.popularmovies;
  */
 public class SingleRow {
 
-        public String mNames;
         public int imgList;
 
         public SingleRow(String mNames, int imgList) {
             this.imgList = imgList;
-            this.mNames = mNames;
         }
 }
