@@ -66,9 +66,9 @@ public class GridAdapter extends BaseAdapter {
             holder = (ViewHolder) rootView.getTag();
         }
 
-        Picasso.with(context).load("https://api.themoviedb.org/3/movie/popular?api_key=1f19c0f420eab0495d79f856d09c9a29")
-                .placeholder(R.drawable.inception)
-                .error(R.mipmap.ic_launcher)
+        Picasso.with(context).load(imagesUrlList.get(position))
+                .placeholder(R.drawable.ramboo)
+                .fit()
                 .into(holder.imgView);
 
         rootView.setOnClickListener(new View.OnClickListener() {
