@@ -39,6 +39,7 @@ public class MoviesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.mainfragment, container, false);
         moviesGridView = (GridView) rootView.findViewById(R.id.gridList_id);
         moviesGridAdapter = new GridAdapter(getContext());
+        new FetchMoviesAsynTask().execute();
         moviesGridView.setAdapter(moviesGridAdapter);
         return rootView;
     }
@@ -94,7 +95,6 @@ public class MoviesFragment extends Fragment {
                     //Since it's JSON, adding a newline isn't necessary (it won't effect parsing)
                     //But it does make debugging a *lot* easier if you print out the completed
                     //buffer for debugging
-
                     buffer.append(line + "\n");
                 }
 
@@ -103,6 +103,8 @@ public class MoviesFragment extends Fragment {
                     return null;
 
                 }
+                moviesJsonStr = buffer.toString();
+
             } catch (IOException e) {
                 return null;
             } finally {
