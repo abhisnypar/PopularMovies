@@ -39,15 +39,15 @@ public class MoviesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.mainfragment, container, false);
         moviesGridView = (GridView) rootView.findViewById(R.id.gridList_id);
         moviesGridAdapter = new GridAdapter(getContext());
-        new FetchMoviesAsynTask().execute();
+        new PopularMoviesAsynTask().execute();
         moviesGridView.setAdapter(moviesGridAdapter);
         return rootView;
     }
 
-    public class FetchMoviesAsynTask extends AsyncTask<String, String, ArrayList<String>> {
+    public class PopularMoviesAsynTask extends AsyncTask<String, String, ArrayList<String>> {
 
 
-        private final String LOG_TAG = FetchMoviesAsynTask.class.getSimpleName();
+        private final String LOG_TAG = PopularMoviesAsynTask.class.getSimpleName();
 
         public String getReadableDataString(long time) {
             //API return Unique time.
