@@ -2,8 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:style="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_top_rated"
+    <item android:id="@+id/action_popular_movies"
         android:orderInCategory="100"
+        android:title="@string/action_popular_movies"
+        android:checkable="true"/>
+    <item android:id="@+id/action_top_rated"
         android:title="@string/action_top_rated"
         android:checkable="true" />
 

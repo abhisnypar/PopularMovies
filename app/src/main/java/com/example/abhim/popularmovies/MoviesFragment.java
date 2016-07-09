@@ -147,10 +147,10 @@ public class MoviesFragment extends Fragment {
 
             final String POM_LIST = "results";
             final String POM_POSTER_PATH = "poster_path";
-            final String POM_RELEASE_DATE = "release_date";
-            final String POM_TITLE = "original_title";
-            final String POM_SYNOPSIS = "overview";
-            final String POM_RATING = "vote_average";
+//            final String POM_RELEASE_DATE = "release_date";
+//            final String POM_TITLE = "original_title";
+//            final String POM_SYNOPSIS = "overview";
+//            final String POM_RATING = "vote_average";
 
             JSONObject moviesJson = new JSONObject(moviesJsonStr);
             JSONArray moviesArray = moviesJson.getJSONArray(POM_LIST);
