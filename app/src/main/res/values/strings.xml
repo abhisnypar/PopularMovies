@@ -4,4 +4,11 @@
     <string name="title">MovieTitle</string>
     <string name="movie_synopsis">Synopsis</string>
     <string name="movie_release_date">Date</string>
+    <string name="detail_Screen">Detail Screen</string>
+
+    <string name="hello_blank_fragment">Top Rated Fragment.\n Here we will display top rated movies</string>
+
+    <!--Menu strings for the main fragment -->
+
+    <string name="action_top_rated">Top Rated Movies</string>
 </resources>

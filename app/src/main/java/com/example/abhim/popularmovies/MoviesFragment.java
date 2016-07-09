@@ -1,5 +1,6 @@
 package com.example.abhim.popularmovies;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +9,9 @@ import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -22,7 +26,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -41,20 +44,30 @@ public class MoviesFragment extends Fragment {
         moviesGridAdapter = new GridAdapter(getContext());
         new PopularMoviesAsynTask().execute();
         moviesGridView.setAdapter(moviesGridAdapter);
+        setHasOptionsMenu(true);
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_menu,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_top_rated){
+            Intent intent = new Intent(getContext(),TopRatedMoviesActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public class PopularMoviesAsynTask extends AsyncTask<String, String, ArrayList<String>> {
 
 
         private final String LOG_TAG = PopularMoviesAsynTask.class.getSimpleName();
-
-        public String getReadableDataString(long time) {
-            //API return Unique time.
-            //it must be converted in to milliseconds
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EE MM DD");
-            return simpleDateFormat.format(time);
-        }
 
 
         @Override
