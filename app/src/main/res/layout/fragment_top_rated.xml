@@ -5,8 +5,9 @@
     tools:context=".TopRatedMoviesActivity$TopRatedFragment">
 
     <GridView
+        android:id="@+id/action_top_rated_grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="auto_fit"
-        android:id="@+id/action_top_rated_grid_view"/>
+        android:numColumns="auto_fit" />
+
 </LinearLayout>

@@ -16,6 +16,4 @@ public class TopRatedMoviesActivity extends AppCompatActivity {
                     .commit();
         }
     }
-
-
 }

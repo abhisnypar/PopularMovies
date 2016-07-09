@@ -48,7 +48,7 @@ public class TopRatedFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.fragment_top_rated, container, false);
-        moviesGridView = (GridView)rootView.findViewById(R.id.action_top_rated_grid_view);
+        moviesGridView = (GridView) rootView.findViewById(R.id.action_top_rated_grid_view);
         new TopRatedMoviesAsyncTask().execute();
         moviesGridAdapter = new GridAdapter(getContext());
         moviesGridView.setAdapter(moviesGridAdapter);
@@ -59,15 +59,15 @@ public class TopRatedFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_menu,menu);
+        inflater.inflate(R.menu.fragment_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.action_popular_movies){
-            Intent intent = new Intent(getActivity(),MainActivity.class);
+        if (id == R.id.action_popular_movies) {
+            Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -180,7 +180,7 @@ public class TopRatedFragment extends Fragment {
 
         @Override
         protected void onPostExecute(ArrayList<String> result) {
-            if (result!=null){
+            if (result != null) {
                 moviesGridAdapter.clear(result);
             }
             super.onPostExecute(result);
