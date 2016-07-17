@@ -1,9 +1,11 @@
 package com.example.abhim.popularmovies;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
@@ -14,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import org.json.JSONArray;
@@ -31,20 +34,32 @@ import java.util.ArrayList;
 /**
  * Created by abhim on 7/2/2016.
  */
-public class MoviesFragment extends Fragment {
+public class MoviesFragment extends Fragment  {
 
     private GridView moviesGridView;
     private GridAdapter moviesGridAdapter;
+    private SharedPreferences mSettings;
+    private SharedPreferences.Editor mEditor;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.mainfragment, container, false);
         moviesGridView = (GridView) rootView.findViewById(R.id.gridList_id);
         moviesGridAdapter = new GridAdapter(getContext());
         new PopularMoviesAsynTask().execute();
         moviesGridView.setAdapter(moviesGridAdapter);
+        mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mEditor = mSettings.edit();
+        mEditor.apply();
         setHasOptionsMenu(true);
+        moviesGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getActivity(),DetailActivity.class);
+                startActivity(i);
+            }
+        });
         return rootView;
     }
 
@@ -54,18 +69,26 @@ public class MoviesFragment extends Fragment {
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+
+        menu.findItem(R.id.action_top_rated);
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
         if (id == R.id.action_top_rated){
             Intent intent = new Intent(getContext(),TopRatedMoviesActivity.class);
             startActivity(intent);
+            item.setChecked(true);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public class PopularMoviesAsynTask extends AsyncTask<String, String, ArrayList<String>> {
 
+    public class PopularMoviesAsynTask extends AsyncTask<String, String, ArrayList<String>> {
 
         private final String LOG_TAG = PopularMoviesAsynTask.class.getSimpleName();
 
@@ -147,10 +170,10 @@ public class MoviesFragment extends Fragment {
 
             final String POM_LIST = "results";
             final String POM_POSTER_PATH = "poster_path";
-//            final String POM_RELEASE_DATE = "release_date";
-//            final String POM_TITLE = "original_title";
-//            final String POM_SYNOPSIS = "overview";
-//            final String POM_RATING = "vote_average";
+            final String POM_RELEASE_DATE = "release_date";
+            final String POM_TITLE = "original_title";
+            final String POM_SYNOPSIS = "overview";
+            final String POM_RATING = "vote_average";
 
             JSONObject moviesJson = new JSONObject(moviesJsonStr);
             JSONArray moviesArray = moviesJson.getJSONArray(POM_LIST);
@@ -166,8 +189,7 @@ public class MoviesFragment extends Fragment {
 
                 JSONObject popularMovies = moviesArray.getJSONObject(i);
                 urls.add("http://image.tmdb.org/t/p/w185" + popularMovies.getString(POM_POSTER_PATH));
-
-
+                String title = popularMovies.getString(POM_TITLE);
             }
             for (String s : resultStr) {
                 Log.v(LOG_TAG, "Forecast entry: " + s);
