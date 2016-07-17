@@ -34,7 +34,7 @@ public class DetailFragment extends Fragment {
         super.onDetach();
     }
 
-    public class DetailAsyncTask extends AsyncTask<Void,Void,Void>{
+    public class DetailAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... params) {

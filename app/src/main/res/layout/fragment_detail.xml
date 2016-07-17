@@ -10,10 +10,10 @@
         android:layout_height="150dp">
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:id="@+id/imageView"
-            android:src="@drawable/appicon"/>
+            android:src="@drawable/appicon" />
     </LinearLayout>
 
 
@@ -23,42 +23,42 @@
         android:layout_below="@+id/imageLayout">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
             android:id="@+id/title_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
             android:id="@+id/releaseDate_textView"
-            android:layout_alignTop="@+id/title_TextView"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="20dp"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/rating_textView"
-            android:layout_marginTop="27dp"
-            android:layout_below="@+id/title_TextView"
-            android:layout_alignStart="@+id/title_TextView" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/title_TextView"
+            android:layout_marginRight="20dp"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
+            android:id="@+id/rating_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/title_TextView"
+            android:layout_below="@+id/title_TextView"
+            android:layout_marginTop="27dp"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/textView"
             android:layout_below="@+id/rating_textView"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="20dp"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </RelativeLayout>
 

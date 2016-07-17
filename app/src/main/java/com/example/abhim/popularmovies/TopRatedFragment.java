@@ -64,7 +64,7 @@ public class TopRatedFragment extends Fragment {
         moviesGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(),DetailActivity.class);
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -86,7 +86,8 @@ public class TopRatedFragment extends Fragment {
             startActivity(intent);
             if (!item.isChecked())
                 item.setChecked(true);
-            else item.setChecked(false);        }
+            else item.setChecked(false);
+        }
         return super.onOptionsItemSelected(item);
     }
 

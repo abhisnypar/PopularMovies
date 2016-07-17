@@ -34,7 +34,7 @@ import java.util.ArrayList;
 /**
  * Created by abhim on 7/2/2016.
  */
-public class MoviesFragment extends Fragment  {
+public class MoviesFragment extends Fragment {
 
     private GridView moviesGridView;
     private GridAdapter moviesGridAdapter;
@@ -56,7 +56,7 @@ public class MoviesFragment extends Fragment  {
         moviesGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getActivity(),DetailActivity.class);
+                Intent i = new Intent(getActivity(), DetailActivity.class);
                 startActivity(i);
             }
         });
@@ -65,7 +65,7 @@ public class MoviesFragment extends Fragment  {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_menu,menu);
+        inflater.inflate(R.menu.fragment_menu, menu);
     }
 
     @Override
@@ -79,8 +79,8 @@ public class MoviesFragment extends Fragment  {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.action_top_rated){
-            Intent intent = new Intent(getContext(),TopRatedMoviesActivity.class);
+        if (id == R.id.action_top_rated) {
+            Intent intent = new Intent(getContext(), TopRatedMoviesActivity.class);
             startActivity(intent);
             item.setChecked(true);
         }
