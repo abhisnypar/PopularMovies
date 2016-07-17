@@ -69,13 +69,6 @@ public class GridAdapter extends BaseAdapter {
         Picasso.with(context).load(imagesUrlList.get(position))
                 .placeholder(R.drawable.ramboo).fit()
                 .into(holder.imgView);
-
-        rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
         return rootView;
     }
 
