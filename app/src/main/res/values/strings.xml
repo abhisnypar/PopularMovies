@@ -13,6 +13,9 @@
     <string name="action_top_rated">Top Rated Movies</string>
     <string name="action_popular_movies">Popular Movies</string>
     <string name="pref_string_default">Popular Movies</string>
+    <string name="pref_string_movies">movies</string>
+
+    <string name="position">Position</string>
 
 
 </resources>

@@ -4,10 +4,12 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/action_popular_movies"
-            android:title="@string/action_popular_movies"/>
+            android:title="@string/action_popular_movies"
+            android:checked="false"/>
         <item
             android:id="@+id/action_top_rated"
-            android:title="@string/action_top_rated" />
+            android:title="@string/action_top_rated"
+            android:checked="false"/>
     </group>
 
 </menu>

@@ -56,7 +56,10 @@ public class MoviesFragment extends Fragment {
         moviesGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getActivity(), DetailActivity.class);
+                int itemPosition = position;
+                String itemValue = (String) moviesGridView.getItemAtPosition(position);
+                Intent i = new Intent(view.getContext(), DetailActivity.class);
+                i.putExtra("Position", itemPosition);
                 startActivity(i);
             }
         });
@@ -82,7 +85,11 @@ public class MoviesFragment extends Fragment {
         if (id == R.id.action_top_rated) {
             Intent intent = new Intent(getContext(), TopRatedMoviesActivity.class);
             startActivity(intent);
-            item.setChecked(true);
+            if (item.isChecked()){
+                item.setChecked(true);
+            }else {
+                item.setChecked(false);
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -170,10 +177,6 @@ public class MoviesFragment extends Fragment {
 
             final String POM_LIST = "results";
             final String POM_POSTER_PATH = "poster_path";
-            final String POM_RELEASE_DATE = "release_date";
-            final String POM_TITLE = "original_title";
-            final String POM_SYNOPSIS = "overview";
-            final String POM_RATING = "vote_average";
 
             JSONObject moviesJson = new JSONObject(moviesJsonStr);
             JSONArray moviesArray = moviesJson.getJSONArray(POM_LIST);
@@ -189,7 +192,6 @@ public class MoviesFragment extends Fragment {
 
                 JSONObject popularMovies = moviesArray.getJSONObject(i);
                 urls.add("http://image.tmdb.org/t/p/w185" + popularMovies.getString(POM_POSTER_PATH));
-                String title = popularMovies.getString(POM_TITLE);
             }
             for (String s : resultStr) {
                 Log.v(LOG_TAG, "Forecast entry: " + s);
