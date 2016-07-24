@@ -7,16 +7,9 @@ public class DetailClass {
 
     public String originalTitle;
     public String movieSynopsis;
-    public String movieDate;
-    public String moviesRating;
-
-    public DetailClass(String originalTitle,String movieSynopsis, String movieDate, String moviesRating){
-        super();
-        this.originalTitle = originalTitle;
-        this.movieSynopsis =movieSynopsis;
-        this.movieDate = movieDate;
-        this.moviesRating = moviesRating;
-    }
+    public int movieDate;
+    public double moviesRating;
+    public String posterImage;
 
     public String getOriginalTitle() {
         return originalTitle;
@@ -34,20 +27,28 @@ public class DetailClass {
         this.movieSynopsis = movieSynopsis;
     }
 
-    public String getMovieDate() {
+    public int getMovieDate() {
         return movieDate;
     }
 
-    public void setMovieDate(String movieDate) {
+    public void setMovieDate(int movieDate) {
         this.movieDate = movieDate;
     }
 
-    public String getMoviesRating() {
+    public double getMoviesRating() {
         return moviesRating;
     }
 
-    public void setMoviesRating(String moviesRating) {
+    public void setMoviesRating(double moviesRating) {
         this.moviesRating = moviesRating;
+    }
+
+    public String getPosterImage() {
+        return posterImage;
+    }
+
+    public void setPosterImage(String posterImage) {
+        this.posterImage = posterImage;
     }
 
 }

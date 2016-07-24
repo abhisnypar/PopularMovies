@@ -84,9 +84,11 @@ public class TopRatedFragment extends Fragment {
         if (id == R.id.action_popular_movies) {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
-            if (!item.isChecked())
+            if (item.isChecked()){
                 item.setChecked(true);
-            else item.setChecked(false);
+            }else {
+                item.setChecked(false);
+            }
         }
         return super.onOptionsItemSelected(item);
     }
