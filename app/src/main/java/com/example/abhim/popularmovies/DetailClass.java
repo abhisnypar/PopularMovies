@@ -7,9 +7,9 @@ public class DetailClass {
 
     public String originalTitle;
     public String movieSynopsis;
-    public int movieDate;
+    public String movieDate;
     public double moviesRating;
-    public String posterImage;
+    public int posterImage;
 
     public String getOriginalTitle() {
         return originalTitle;
@@ -27,11 +27,11 @@ public class DetailClass {
         this.movieSynopsis = movieSynopsis;
     }
 
-    public int getMovieDate() {
+    public String getMovieDate() {
         return movieDate;
     }
 
-    public void setMovieDate(int movieDate) {
+    public void setMovieDate(String movieDate) {
         this.movieDate = movieDate;
     }
 
@@ -43,11 +43,11 @@ public class DetailClass {
         this.moviesRating = moviesRating;
     }
 
-    public String getPosterImage() {
+    public int getPosterImage() {
         return posterImage;
     }
 
-    public void setPosterImage(String posterImage) {
+    public void setPosterImage(int posterImage) {
         this.posterImage = posterImage;
     }
 

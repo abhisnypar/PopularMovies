@@ -40,6 +40,13 @@ public class MoviesFragment extends Fragment {
     private GridAdapter moviesGridAdapter;
     private SharedPreferences mSettings;
     private SharedPreferences.Editor mEditor;
+    private String originalTitle;
+    private String movieSynopsis;
+    private String movieDate;
+    private double moviesRating;
+    private int posterImage;
+    private ArrayList<DetailClass> detailClass;
+    private DetailClass detailClassObject;
 
     @Nullable
     @Override
@@ -57,12 +64,22 @@ public class MoviesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int itemPosition = position;
-                String itemValue = (String) moviesGridView.getItemAtPosition(position);
+                originalTitle = detailClassObject.getOriginalTitle();
+                movieSynopsis = detailClassObject.getMovieSynopsis();
+                movieDate = detailClassObject.getMovieDate();
+                moviesRating = detailClassObject.getMoviesRating();
+                posterImage = detailClassObject.getPosterImage();
                 Intent i = new Intent(view.getContext(), DetailActivity.class);
                 i.putExtra("Position", itemPosition);
+                i.putExtra("Title", originalTitle);
+                i.putExtra("Synopsis", movieSynopsis);
+                i.putExtra("Date", movieDate);
+                i.putExtra("Rating", moviesRating);
+                i.putExtra("Image", posterImage);
                 startActivity(i);
             }
         });
+
         return rootView;
     }
 
@@ -85,9 +102,9 @@ public class MoviesFragment extends Fragment {
         if (id == R.id.action_top_rated) {
             Intent intent = new Intent(getContext(), TopRatedMoviesActivity.class);
             startActivity(intent);
-            if (item.isChecked()){
+            if (item.isChecked()) {
                 item.setChecked(true);
-            }else {
+            } else {
                 item.setChecked(false);
             }
         }
@@ -177,6 +194,11 @@ public class MoviesFragment extends Fragment {
 
             final String POM_LIST = "results";
             final String POM_POSTER_PATH = "poster_path";
+            final String POM_TITLE = "original_title";
+            final String POM_BACKDROP_PATH = "backdrop_path";
+            final String POM_RATING = "vote_average";
+            final String POM_DATE = "release_date";
+            final String POM_SYNOPSIS = "overview";
 
             JSONObject moviesJson = new JSONObject(moviesJsonStr);
             JSONArray moviesArray = moviesJson.getJSONArray(POM_LIST);
@@ -191,7 +213,14 @@ public class MoviesFragment extends Fragment {
             for (int i = 0; i < moviesArray.length(); i++) {
 
                 JSONObject popularMovies = moviesArray.getJSONObject(i);
+                detailClassObject.setOriginalTitle(popularMovies.getString(POM_TITLE));
+                detailClassObject.setMovieSynopsis(popularMovies.getString(POM_SYNOPSIS));
+                detailClassObject.setMovieDate(popularMovies.getString(POM_DATE));
+                detailClassObject.setMoviesRating(popularMovies.getDouble(POM_RATING));
+                detailClassObject.setPosterImage(Integer.parseInt("http://image.tmdb.org/t/p/w185" + popularMovies.getString(POM_BACKDROP_PATH)));
                 urls.add("http://image.tmdb.org/t/p/w185" + popularMovies.getString(POM_POSTER_PATH));
+                detailClass.add(detailClassObject);
+
             }
             for (String s : resultStr) {
                 Log.v(LOG_TAG, "Forecast entry: " + s);
