@@ -45,6 +45,7 @@ public class DetailActivity extends AppCompatActivity {
             synopsis = extras.getString("Synopsis");
             rating = extras.getDouble("Rating");
             release_date = extras.getString("Date");
+            
         }
         titleTextView.setText(title);
         synopsisTextView.setText(synopsis);
