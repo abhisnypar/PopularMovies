@@ -41,6 +41,13 @@ public class TopRatedFragment extends Fragment {
     private GridAdapter moviesGridAdapter;
     private SharedPreferences mSettings;
     private SharedPreferences.Editor mEditor;
+    private String originalTitle;
+    private String movieSynopsis;
+    private String movieDate;
+    private double moviesRating;
+    private int posterImage;
+    private ArrayList<DetailClass> detailClass;
+    private DetailClass detailClassObject;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +72,11 @@ public class TopRatedFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("Title", originalTitle);
+                intent.putExtra("Synopsis", movieSynopsis);
+                intent.putExtra("Date", movieDate);
+                intent.putExtra("Rating", moviesRating);
+                intent.putExtra("Image", posterImage);
                 startActivity(intent);
             }
         });
@@ -93,12 +105,12 @@ public class TopRatedFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public class TopRatedMoviesAsyncTask extends AsyncTask<String, String, ArrayList<String>> {
+    public class TopRatedMoviesAsyncTask extends AsyncTask<String, String, ArrayList<DetailClass>> {
 
         private final String LOG_TAG = TopRatedFragment.class.getSimpleName();
 
         @Override
-        protected ArrayList<String> doInBackground(String... params) {
+        protected ArrayList<DetailClass> doInBackground(String... params) {
 
             //Initialize the network connection using #Http
             HttpURLConnection httpURLConnection = null;
@@ -175,31 +187,47 @@ public class TopRatedFragment extends Fragment {
             return null;
         }
 
-        private ArrayList<String> getTopRatedMoviesFromJson(String topRatedJsonStr) throws JSONException {
+        private ArrayList<DetailClass> getTopRatedMoviesFromJson(String topRatedJsonStr) throws JSONException {
 
             final String POM_LIST = "results";
             final String POM_POSTER_PATH = "poster_path";
+            final String POM_TITLE = "original_title";
+            final String POM_BACKDROP_PATH = "backdrop_path";
+            final String POM_RATING = "vote_average";
+            final String POM_DATE = "release_date";
+            final String POM_SYNOPSIS = "overview";
 
             JSONObject movesObject = new JSONObject(topRatedJsonStr);
             JSONArray moviesArray = movesObject.getJSONArray(POM_LIST);
 
-            ArrayList<String> url = new ArrayList<>();
+//            ArrayList<String> url = new ArrayList<>();
+            detailClass = new ArrayList<>();
+            detailClassObject = new DetailClass();
+
+            String imageUrl = "http://image.tmdb.org/t/p/w185";
 
             String[] resultStr = new String[moviesArray.length() - 1];
 
             for (int i = 0; i < moviesArray.length(); i++) {
                 JSONObject topRatedMovies = moviesArray.getJSONObject(i);
-                url.add("http://image.tmdb.org/t/p/w185" + topRatedMovies.getString(POM_POSTER_PATH));
+                detailClassObject.setOriginalTitle(topRatedMovies.getString(POM_TITLE));
+                detailClassObject.setMovieSynopsis(topRatedMovies.getString(POM_SYNOPSIS));
+                detailClassObject.setMovieDate(topRatedMovies.getString(POM_DATE));
+                detailClassObject.setMoviesRating(topRatedMovies.getDouble(POM_RATING));
+                detailClassObject.setPosterImage((imageUrl + topRatedMovies.getString(POM_BACKDROP_PATH)));
+                detailClassObject.setGridImage((imageUrl+topRatedMovies.getString(POM_POSTER_PATH)));
+//                url.add( imageUrl+ topRatedMovies.getString(POM_POSTER_PATH));
+                detailClass.add(detailClassObject);
             }
 
             for (String s : resultStr) {
                 Log.v(LOG_TAG, "TopRatedMovies: " + s);
             }
-            return url;
+            return detailClass;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<String> result) {
+        protected void onPostExecute(ArrayList<DetailClass> result) {
             if (result != null) {
                 moviesGridAdapter.clear(result);
             }

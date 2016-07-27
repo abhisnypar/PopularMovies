@@ -18,7 +18,7 @@ import java.util.Collections;
  */
 public class GridAdapter extends BaseAdapter {
 
-    public ArrayList<String> imagesUrlList;
+    public ArrayList<DetailClass> imagesUrlList;
     Context context;
 
     public GridAdapter(Context c) {
@@ -56,7 +56,6 @@ public class GridAdapter extends BaseAdapter {
     public View getView(final int position, final View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         View rootView = convertView;
-        final String temp = imagesUrlList.get(position);
         if (rootView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rootView = inflater.inflate(R.layout.grid_list_view, parent, false);
@@ -67,13 +66,13 @@ public class GridAdapter extends BaseAdapter {
             holder = (ViewHolder) rootView.getTag();
         }
 
-        Picasso.with(context).load(imagesUrlList.get(position))
+        Picasso.with(context).load(imagesUrlList.get(position).getGridImage())
                 .placeholder(R.drawable.ramboo).fit()
                 .into(holder.imgView);
         return rootView;
     }
 
-    public void clear(ArrayList<String> imagesUrlList) {
+    public void clear(ArrayList<DetailClass> imagesUrlList) {
         this.imagesUrlList.clear();
         this.imagesUrlList.addAll(imagesUrlList);
         notifyDataSetChanged();

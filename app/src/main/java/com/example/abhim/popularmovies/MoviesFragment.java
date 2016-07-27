@@ -44,7 +44,7 @@ public class MoviesFragment extends Fragment {
     private String movieSynopsis;
     private String movieDate;
     private double moviesRating;
-    private int posterImage;
+    private String posterImage;
     private ArrayList<DetailClass> detailClass;
     private DetailClass detailClassObject;
 
@@ -70,7 +70,6 @@ public class MoviesFragment extends Fragment {
                 moviesRating = detailClassObject.getMoviesRating();
                 posterImage = detailClassObject.getPosterImage();
                 Intent i = new Intent(view.getContext(), DetailActivity.class);
-                i.putExtra("Position", itemPosition);
                 i.putExtra("Title", originalTitle);
                 i.putExtra("Synopsis", movieSynopsis);
                 i.putExtra("Date", movieDate);
@@ -112,13 +111,13 @@ public class MoviesFragment extends Fragment {
     }
 
 
-    public class PopularMoviesAsynTask extends AsyncTask<String, String, ArrayList<String>> {
+    public class PopularMoviesAsynTask extends AsyncTask<String, String, ArrayList<DetailClass>> {
 
         private final String LOG_TAG = PopularMoviesAsynTask.class.getSimpleName();
 
 
         @Override
-        protected ArrayList<String> doInBackground(String... params) {
+        protected ArrayList<DetailClass> doInBackground(String... params) {
 
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
@@ -189,7 +188,7 @@ public class MoviesFragment extends Fragment {
             return null;
         }
 
-        private ArrayList<String> getPopularMoviesDataFromJson(String moviesJsonStr) throws JSONException {
+        private ArrayList<DetailClass> getPopularMoviesDataFromJson(String moviesJsonStr) throws JSONException {
             //These are the names of the JSON object that need to be extracted.
 
             final String POM_LIST = "results";
@@ -202,13 +201,16 @@ public class MoviesFragment extends Fragment {
 
             JSONObject moviesJson = new JSONObject(moviesJsonStr);
             JSONArray moviesArray = moviesJson.getJSONArray(POM_LIST);
-            ArrayList<String> urls = new ArrayList<>();
+//            ArrayList<String> urls = new ArrayList<>();
+            String imageUrl = "http://image.tmdb.org/t/p/w185";
+            detailClass = new ArrayList<>();
 
 
             String[] resultStr = new String[moviesArray.length() - 1];
 
             Time datTime = new Time();
             datTime.setToNow();
+            detailClassObject = new DetailClass();
 
             for (int i = 0; i < moviesArray.length(); i++) {
 
@@ -217,19 +219,20 @@ public class MoviesFragment extends Fragment {
                 detailClassObject.setMovieSynopsis(popularMovies.getString(POM_SYNOPSIS));
                 detailClassObject.setMovieDate(popularMovies.getString(POM_DATE));
                 detailClassObject.setMoviesRating(popularMovies.getDouble(POM_RATING));
-                detailClassObject.setPosterImage(Integer.parseInt("http://image.tmdb.org/t/p/w185" + popularMovies.getString(POM_BACKDROP_PATH)));
-                urls.add("http://image.tmdb.org/t/p/w185" + popularMovies.getString(POM_POSTER_PATH));
+                detailClassObject.setPosterImage((imageUrl + popularMovies.getString(POM_BACKDROP_PATH)));
+                detailClassObject.setGridImage((imageUrl+popularMovies.getString(POM_POSTER_PATH)));
+//                urls.add(imageUrl + popularMovies.getString(POM_POSTER_PATH));
                 detailClass.add(detailClassObject);
 
             }
             for (String s : resultStr) {
                 Log.v(LOG_TAG, "Forecast entry: " + s);
             }
-            return urls;
+            return detailClass;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<String> result) {
+        protected void onPostExecute(ArrayList<DetailClass> result) {
 
             if (result != null) {
                 moviesGridAdapter.clear(result);
