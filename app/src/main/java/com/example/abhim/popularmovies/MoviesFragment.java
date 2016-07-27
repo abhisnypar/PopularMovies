@@ -70,7 +70,7 @@ public class MoviesFragment extends Fragment {
                 movieDate = detailClass.get(position).getMovieDate();
                 moviesRating = detailClass.get(position).getMoviesRating();
                 posterImage = detailClass.get(position).getPosterImage();
-                i.putExtra("Position",itemPosition);
+                i.putExtra("Position", itemPosition);
                 i.putExtra("Title", originalTitle);
                 i.putExtra("Synopsis", movieSynopsis);
                 i.putExtra("Date", movieDate);
@@ -222,7 +222,7 @@ public class MoviesFragment extends Fragment {
                 detailClassObject.setMovieDate(popularMovies.getString(POM_DATE));
                 detailClassObject.setMoviesRating(popularMovies.getDouble(POM_RATING));
                 detailClassObject.setPosterImage((imageUrl + popularMovies.getString(POM_BACKDROP_PATH)));
-                detailClassObject.setGridImage((imageUrl+popularMovies.getString(POM_POSTER_PATH)));
+                detailClassObject.setGridImage((imageUrl + popularMovies.getString(POM_POSTER_PATH)));
                 detailClass.add(detailClassObject);
 
             }

@@ -77,7 +77,7 @@ public class TopRatedFragment extends Fragment {
                 movieDate = detailClass.get(position).getMovieDate();
                 moviesRating = detailClass.get(position).getMoviesRating();
                 posterImage = detailClass.get(position).getPosterImage();
-                intent.putExtra("Position",position);
+                intent.putExtra("Position", position);
                 intent.putExtra("Title", originalTitle);
                 intent.putExtra("Synopsis", movieSynopsis);
                 intent.putExtra("Date", movieDate);
@@ -102,9 +102,9 @@ public class TopRatedFragment extends Fragment {
         if (id == R.id.action_popular_movies) {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
-            if (item.isChecked()){
+            if (item.isChecked()) {
                 item.setChecked(true);
-            }else {
+            } else {
                 item.setChecked(false);
             }
         }
@@ -221,7 +221,7 @@ public class TopRatedFragment extends Fragment {
                 detailClassObject.setMovieDate(topRatedMovies.getString(POM_DATE));
                 detailClassObject.setMoviesRating(topRatedMovies.getDouble(POM_RATING));
                 detailClassObject.setPosterImage((imageUrl + topRatedMovies.getString(POM_BACKDROP_PATH)));
-                detailClassObject.setGridImage((imageUrl+topRatedMovies.getString(POM_POSTER_PATH)));
+                detailClassObject.setGridImage((imageUrl + topRatedMovies.getString(POM_POSTER_PATH)));
                 detailClass.add(detailClassObject);
             }
 
