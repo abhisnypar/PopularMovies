@@ -77,6 +77,7 @@ public class TopRatedFragment extends Fragment {
                 movieDate = detailClass.get(position).getMovieDate();
                 moviesRating = detailClass.get(position).getMoviesRating();
                 posterImage = detailClass.get(position).getPosterImage();
+                intent.putExtra("Position",position);
                 intent.putExtra("Title", originalTitle);
                 intent.putExtra("Synopsis", movieSynopsis);
                 intent.putExtra("Date", movieDate);
@@ -207,7 +208,6 @@ public class TopRatedFragment extends Fragment {
 
 //            ArrayList<String> url = new ArrayList<>();
             detailClass = new ArrayList<>();
-            detailClassObject = new DetailClass();
 
             String imageUrl = "http://image.tmdb.org/t/p/w185";
 
@@ -215,13 +215,13 @@ public class TopRatedFragment extends Fragment {
 
             for (int i = 0; i < moviesArray.length(); i++) {
                 JSONObject topRatedMovies = moviesArray.getJSONObject(i);
+                detailClassObject = new DetailClass();
                 detailClassObject.setOriginalTitle(topRatedMovies.getString(POM_TITLE));
                 detailClassObject.setMovieSynopsis(topRatedMovies.getString(POM_SYNOPSIS));
                 detailClassObject.setMovieDate(topRatedMovies.getString(POM_DATE));
                 detailClassObject.setMoviesRating(topRatedMovies.getDouble(POM_RATING));
                 detailClassObject.setPosterImage((imageUrl + topRatedMovies.getString(POM_BACKDROP_PATH)));
                 detailClassObject.setGridImage((imageUrl+topRatedMovies.getString(POM_POSTER_PATH)));
-//                url.add( imageUrl+ topRatedMovies.getString(POM_POSTER_PATH));
                 detailClass.add(detailClassObject);
             }
 

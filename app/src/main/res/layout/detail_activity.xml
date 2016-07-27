@@ -1,62 +1,74 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.abhim.popularmovies.DetailFragment">
 
-    <LinearLayout
-        android:id="@+id/imageLayout"
-        android:layout_width="match_parent"
-        android:layout_height="150dp">
-
-        <ImageView
-            android:id="@+id/detail_imageView"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/appicon" />
-    </LinearLayout>
-
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/imageLayout">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/title_TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <LinearLayout
+            android:id="@+id/imageLayout"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
 
-        <TextView
-            android:id="@+id/releaseDate_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/title_TextView"
-            android:layout_marginRight="20dp"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <ImageView
+                android:id="@+id/detail_imageView"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/appicon" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/synopsis_textView"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ratingBar"
-            android:layout_marginTop="20dp"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ratingBar"
-            android:layout_marginTop="55dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/imageLayout">
+
+            <TextView
+                android:id="@+id/title_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="Large Text"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/releaseDate_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title_TextView"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/synopsis_textView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ratingBar"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:text="Small Text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="italic" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/releaseDate_textView"
+                android:elevation="@dimen/rating_bar_dimen"
+                android:numStars="10"
+                android:stepSize="1" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
-
-</RelativeLayout>
+</ScrollView>

@@ -64,12 +64,13 @@ public class MoviesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int itemPosition = position;
-                originalTitle = detailClassObject.getOriginalTitle();
-                movieSynopsis = detailClassObject.getMovieSynopsis();
-                movieDate = detailClassObject.getMovieDate();
-                moviesRating = detailClassObject.getMoviesRating();
-                posterImage = detailClassObject.getPosterImage();
                 Intent i = new Intent(view.getContext(), DetailActivity.class);
+                originalTitle = detailClass.get(position).getOriginalTitle();
+                movieSynopsis = detailClass.get(position).getMovieSynopsis();
+                movieDate = detailClass.get(position).getMovieDate();
+                moviesRating = detailClass.get(position).getMoviesRating();
+                posterImage = detailClass.get(position).getPosterImage();
+                i.putExtra("Position",itemPosition);
                 i.putExtra("Title", originalTitle);
                 i.putExtra("Synopsis", movieSynopsis);
                 i.putExtra("Date", movieDate);
@@ -210,23 +211,23 @@ public class MoviesFragment extends Fragment {
 
             Time datTime = new Time();
             datTime.setToNow();
-            detailClassObject = new DetailClass();
+
 
             for (int i = 0; i < moviesArray.length(); i++) {
 
                 JSONObject popularMovies = moviesArray.getJSONObject(i);
+                detailClassObject = new DetailClass();
                 detailClassObject.setOriginalTitle(popularMovies.getString(POM_TITLE));
                 detailClassObject.setMovieSynopsis(popularMovies.getString(POM_SYNOPSIS));
                 detailClassObject.setMovieDate(popularMovies.getString(POM_DATE));
                 detailClassObject.setMoviesRating(popularMovies.getDouble(POM_RATING));
                 detailClassObject.setPosterImage((imageUrl + popularMovies.getString(POM_BACKDROP_PATH)));
                 detailClassObject.setGridImage((imageUrl+popularMovies.getString(POM_POSTER_PATH)));
-//                urls.add(imageUrl + popularMovies.getString(POM_POSTER_PATH));
                 detailClass.add(detailClassObject);
 
             }
             for (String s : resultStr) {
-                Log.v(LOG_TAG, "Forecast entry: " + s);
+                Log.v(LOG_TAG, "Movies Entry: " + s);
             }
             return detailClass;
         }
