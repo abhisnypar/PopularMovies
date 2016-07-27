@@ -35,7 +35,7 @@ public class DetailActivity extends AppCompatActivity {
         titleTextView = (TextView) findViewById(R.id.title_TextView);
         synopsisTextView = (TextView) findViewById(R.id.synopsis_textView);
         releaseDateTextView = (TextView) findViewById(R.id.releaseDate_textView);
-        ratingBarView = (RatingBar) findViewById(R.id.ratingBar);
+        ratingBarView= (RatingBar) findViewById(R.id.ratingBar);
         posterImageView = (ImageView) findViewById(R.id.detail_imageView);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
