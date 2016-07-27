@@ -39,7 +39,6 @@ public class DetailActivity extends AppCompatActivity {
         activityAdapter = new DetailActivityAdapter(getApplicationContext());
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            pos = extras.getInt("Position");
             title = extras.getString("Title");
             image = (int) extras.get("Image");
             synopsis = extras.getString("Synopsis");

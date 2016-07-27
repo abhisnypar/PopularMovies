@@ -9,7 +9,16 @@ public class DetailClass {
     public String movieSynopsis;
     public String movieDate;
     public double moviesRating;
-    public int posterImage;
+    public String posterImage;
+    public String gridImage;
+
+    public String getGridImage() {
+        return gridImage;
+    }
+
+    public void setGridImage(String gridImage) {
+        this.gridImage = gridImage;
+    }
 
     public String getOriginalTitle() {
         return originalTitle;
@@ -43,11 +52,11 @@ public class DetailClass {
         this.moviesRating = moviesRating;
     }
 
-    public int getPosterImage() {
+    public String getPosterImage() {
         return posterImage;
     }
 
-    public void setPosterImage(int posterImage) {
+    public void setPosterImage(String posterImage) {
         this.posterImage = posterImage;
     }
 
