@@ -206,7 +206,6 @@ public class TopRatedFragment extends Fragment {
             JSONObject movesObject = new JSONObject(topRatedJsonStr);
             JSONArray moviesArray = movesObject.getJSONArray(POM_LIST);
 
-//            ArrayList<String> url = new ArrayList<>();
             detailClass = new ArrayList<>();
 
             String imageUrl = "http://image.tmdb.org/t/p/w185";
