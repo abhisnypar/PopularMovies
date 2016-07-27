@@ -42,23 +42,19 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/rating_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/title_TextView"
-            android:layout_below="@+id/title_TextView"
-            android:layout_marginTop="27dp"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
             android:id="@+id/synopsis_textView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rating_textView"
+            android:layout_below="@+id/ratingBar"
             android:layout_marginTop="20dp"
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar"
+            android:layout_marginTop="55dp"/>
 
     </RelativeLayout>
 

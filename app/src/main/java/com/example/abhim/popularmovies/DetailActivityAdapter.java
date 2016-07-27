@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -35,7 +36,7 @@ public class DetailActivityAdapter extends BaseAdapter {
         private TextView mTitle;
         private TextView mDate;
         private TextView mSynopsis;
-        private TextView mRating;
+        private RatingBar mRating;
         private ImageView mPosterImage;
 
         public Holder(View view) {
@@ -43,7 +44,7 @@ public class DetailActivityAdapter extends BaseAdapter {
             mTitle = (TextView) view.findViewById(R.id.title_TextView);
             mDate = (TextView) view.findViewById(R.id.releaseDate_textView);
             mSynopsis = (TextView) view.findViewById(R.id.synopsis_textView);
-            mRating = (TextView) view.findViewById(R.id.rating_textView);
+            mRating = (RatingBar) view.findViewById(R.id.ratingBar);
             mPosterImage = (ImageView) view.findViewById(R.id.detail_imageView);
         }
     }
@@ -78,7 +79,7 @@ public class DetailActivityAdapter extends BaseAdapter {
             holder = (Holder) rootView.getTag();
         }
         holder.mTitle.setText(detailClass.get(position).getOriginalTitle());
-        holder.mRating.setText((int) detailClass.get(position).getMoviesRating());
+        holder.mRating.setNumStars((int) detailClass.get(position).getMoviesRating());
         holder.mDate.setText(detailClass.get(position).getMovieDate());
         holder.mSynopsis.setText(detailClass.get(position).getMovieSynopsis());
 

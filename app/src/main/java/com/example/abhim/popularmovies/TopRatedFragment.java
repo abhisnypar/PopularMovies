@@ -45,7 +45,7 @@ public class TopRatedFragment extends Fragment {
     private String movieSynopsis;
     private String movieDate;
     private double moviesRating;
-    private int posterImage;
+    private String posterImage;
     private ArrayList<DetailClass> detailClass;
     private DetailClass detailClassObject;
 
@@ -72,6 +72,11 @@ public class TopRatedFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
+                originalTitle = detailClass.get(position).getOriginalTitle();
+                movieSynopsis = detailClass.get(position).getMovieSynopsis();
+                movieDate = detailClass.get(position).getMovieDate();
+                moviesRating = detailClass.get(position).getMoviesRating();
+                posterImage = detailClass.get(position).getPosterImage();
                 intent.putExtra("Title", originalTitle);
                 intent.putExtra("Synopsis", movieSynopsis);
                 intent.putExtra("Date", movieDate);
