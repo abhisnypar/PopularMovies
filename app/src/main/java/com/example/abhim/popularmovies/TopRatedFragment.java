@@ -29,6 +29,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,7 +40,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class TopRatedFragment extends Fragment {
-    private GridView moviesGridView;
+    @InjectView(R.id.action_top_rated_grid_view) GridView moviesGridView;
     private GridAdapter moviesGridAdapter;
     private SharedPreferences mSettings;
     private SharedPreferences.Editor mEditor;
@@ -60,8 +63,8 @@ public class TopRatedFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.fragment_top_rated, container, false);
-        moviesGridView = (GridView) rootView.findViewById(R.id.action_top_rated_grid_view);
         new TopRatedMoviesAsyncTask().execute();
+        ButterKnife.inject(this,rootView);
         moviesGridAdapter = new GridAdapter(getContext());
         moviesGridView.setAdapter(moviesGridAdapter);
         mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
