@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by abhim on 7/3/2016.
@@ -43,12 +45,12 @@ public class GridAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        private TextView mText;
-        private ImageView imgView;
-        private ImageView detailImageView;
+
+        @InjectView(R.id.grid_imageView_id)ImageView imgView;
 
         public ViewHolder(View v) {
-            imgView = (ImageView) v.findViewById(R.id.grid_imageView_id);
+
+            ButterKnife.inject(this,v);
         }
     }
 

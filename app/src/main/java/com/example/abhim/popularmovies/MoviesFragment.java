@@ -31,12 +31,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * Created by abhim on 7/2/2016.
  */
 public class MoviesFragment extends Fragment {
 
-    private GridView moviesGridView;
+    @InjectView(R.id.gridList_id)GridView moviesGridView;
     private GridAdapter moviesGridAdapter;
     private SharedPreferences mSettings;
     private SharedPreferences.Editor mEditor;
@@ -52,8 +55,8 @@ public class MoviesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.mainfragment, container, false);
-        moviesGridView = (GridView) rootView.findViewById(R.id.gridList_id);
         moviesGridAdapter = new GridAdapter(getContext());
+        ButterKnife.inject(this,rootView);
         new PopularMoviesAsynTask().execute();
         moviesGridView.setAdapter(moviesGridAdapter);
         mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());

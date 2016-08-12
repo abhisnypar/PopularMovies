@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * Created by abhim on 7/11/2016.
  */
@@ -16,11 +19,12 @@ public class DetailActivity extends AppCompatActivity {
 
     private int pos;
     private DetailClass detailClass;
-    private TextView titleTextView;
-    private TextView synopsisTextView;
-    private ImageView posterImageView;
-    private TextView releaseDateTextView;
-    private RatingBar ratingBarView;
+
+    @InjectView(R.id.title_TextView) TextView titleTextView;
+    @InjectView(R.id.synopsis_textView) TextView synopsisTextView;
+    @InjectView(R.id.releaseDate_textView) TextView releaseDateTextView;
+    @InjectView(R.id.ratingBar) RatingBar ratingBarView;
+    @InjectView(R.id.detail_imageView) ImageView posterImageView;
     private String title;
     private String image;
     private String synopsis;
@@ -31,12 +35,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity);
-
-        titleTextView = (TextView) findViewById(R.id.title_TextView);
-        synopsisTextView = (TextView) findViewById(R.id.synopsis_textView);
-        releaseDateTextView = (TextView) findViewById(R.id.releaseDate_textView);
-        ratingBarView= (RatingBar) findViewById(R.id.ratingBar);
-        posterImageView = (ImageView) findViewById(R.id.detail_imageView);
+        ButterKnife.inject(this);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             pos = extras.getInt("Position");
