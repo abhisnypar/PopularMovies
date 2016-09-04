@@ -1,4 +1,4 @@
-package com.example.abhim.popularmovies;
+package com.example.abhim.popularmovies.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.example.abhim.popularmovies.DetailClass;
+import com.example.abhim.popularmovies.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

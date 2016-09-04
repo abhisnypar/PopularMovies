@@ -1,4 +1,4 @@
-package com.example.abhim.popularmovies;
+package com.example.abhim.popularmovies.Fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+
+import com.example.abhim.popularmovies.Activities.DetailActivity;
+import com.example.abhim.popularmovies.Activities.TopRatedMoviesActivity;
+import com.example.abhim.popularmovies.BuildConfig;
+import com.example.abhim.popularmovies.DetailClass;
+import com.example.abhim.popularmovies.GridAdapter;
+import com.example.abhim.popularmovies.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,6 +74,7 @@ public class MoviesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int itemPosition = position;
+
                 Intent i = new Intent(view.getContext(), DetailActivity.class);
                 originalTitle = detailClass.get(position).getOriginalTitle();
                 movieSynopsis = detailClass.get(position).getMovieSynopsis();
@@ -205,7 +213,6 @@ public class MoviesFragment extends Fragment {
 
             JSONObject moviesJson = new JSONObject(moviesJsonStr);
             JSONArray moviesArray = moviesJson.getJSONArray(POM_LIST);
-//            ArrayList<String> urls = new ArrayList<>();
             String imageUrl = "http://image.tmdb.org/t/p/w185";
             detailClass = new ArrayList<>();
 
