@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.abhim.popularmovies.DetailClass;
+import com.example.abhim.popularmovies.ModelClasses.DetailClass;
 import com.example.abhim.popularmovies.R;
 import com.squareup.picasso.Picasso;
 

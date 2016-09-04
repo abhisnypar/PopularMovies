@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.abhim.popularmovies.R;
-import com.example.abhim.popularmovies.TopRatedFragment;
+import com.example.abhim.popularmovies.Fragments.TopRatedFragment;
 
 public class TopRatedMoviesActivity extends AppCompatActivity {
 

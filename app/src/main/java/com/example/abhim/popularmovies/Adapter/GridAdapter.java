@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.example.abhim.popularmovies.DetailClass;
+import com.example.abhim.popularmovies.ModelClasses.DetailClass;
 import com.example.abhim.popularmovies.R;
 import com.squareup.picasso.Picasso;
 

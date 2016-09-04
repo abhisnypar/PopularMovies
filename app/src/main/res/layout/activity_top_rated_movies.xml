@@ -4,6 +4,6 @@
     android:id="@+id/action_top_rated_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.abhim.popularmovies.TopRatedMoviesActivity">
+    tools:context=".Activities.TopRatedMoviesActivity">
 
 </FrameLayout>

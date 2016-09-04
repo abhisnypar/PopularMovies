@@ -20,8 +20,8 @@ import android.widget.GridView;
 import com.example.abhim.popularmovies.Activities.DetailActivity;
 import com.example.abhim.popularmovies.Activities.MainActivity;
 import com.example.abhim.popularmovies.BuildConfig;
-import com.example.abhim.popularmovies.DetailClass;
-import com.example.abhim.popularmovies.GridAdapter;
+import com.example.abhim.popularmovies.ModelClasses.DetailClass;
+import com.example.abhim.popularmovies.Adapter.GridAdapter;
 import com.example.abhim.popularmovies.R;
 
 import org.json.JSONArray;
