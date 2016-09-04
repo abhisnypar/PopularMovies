@@ -1,4 +1,4 @@
-package com.example.abhim.popularmovies;
+package com.example.abhim.popularmovies.Activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.abhim.popularmovies.ModelClasses.DetailClass;
+import com.example.abhim.popularmovies.R;
 import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;

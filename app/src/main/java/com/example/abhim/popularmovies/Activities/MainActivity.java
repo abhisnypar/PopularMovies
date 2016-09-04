@@ -1,7 +1,10 @@
-package com.example.abhim.popularmovies;
+package com.example.abhim.popularmovies.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.abhim.popularmovies.Fragments.MoviesFragment;
+import com.example.abhim.popularmovies.R;
 
 public class MainActivity extends AppCompatActivity {
 

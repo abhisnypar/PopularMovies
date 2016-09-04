@@ -1,4 +1,4 @@
-package com.example.abhim.popularmovies;
+package com.example.abhim.popularmovies.Fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+
+import com.example.abhim.popularmovies.Activities.DetailActivity;
+import com.example.abhim.popularmovies.Activities.MainActivity;
+import com.example.abhim.popularmovies.BuildConfig;
+import com.example.abhim.popularmovies.ModelClasses.DetailClass;
+import com.example.abhim.popularmovies.Adapter.GridAdapter;
+import com.example.abhim.popularmovies.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

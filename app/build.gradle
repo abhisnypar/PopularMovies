@@ -10,6 +10,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [HOCKEYAPP_APP_ID: "0f781253e2fa404789a78b55ccbd0504"]
+
     }
     buildTypes {
         release {
@@ -21,13 +23,19 @@ android {
         it.buildConfigField 'String', 'POPULAR_MOVIES_API_KEY', "\"1f19c0f420eab0495d79f856d09c9a29\""
     }
 }
+repositories {
+    jcenter()
+}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.android.support:support-v4:23.4.0'
+    compile 'net.hockeyapp.android:HockeySDK:4.1.0'
     compile 'com.jakewharton:butterknife:5.1.1'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.google.code.gson:gson:2.7'
 }

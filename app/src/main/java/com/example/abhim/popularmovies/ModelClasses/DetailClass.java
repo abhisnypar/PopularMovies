@@ -1,9 +1,9 @@
-package com.example.abhim.popularmovies;
+package com.example.abhim.popularmovies.ModelClasses;
 
 /**
  * Created by abhim on 7/11/2016.
  */
-public class DetailClass {
+public class DetailClass  {
 
     public String originalTitle;
     public String movieSynopsis;
@@ -11,6 +11,7 @@ public class DetailClass {
     public double moviesRating;
     public String posterImage;
     public String gridImage;
+
 
     public String getGridImage() {
         return gridImage;
