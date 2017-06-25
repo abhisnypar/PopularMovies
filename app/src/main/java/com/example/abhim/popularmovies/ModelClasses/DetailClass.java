@@ -1,7 +1,7 @@
 package com.example.abhim.popularmovies.ModelClasses;
 
 /**
- * Created by abhim on 7/11/2016.
+ * Created by anusha on 6/11/2017.
  */
 public class DetailClass  {
 

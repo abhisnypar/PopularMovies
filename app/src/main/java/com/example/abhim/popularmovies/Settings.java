@@ -7,7 +7,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
 /**
- * Created by abhim on 7/10/2016.
+ * Created by anusha on 6/10/2017.
  */
 public class Settings extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 

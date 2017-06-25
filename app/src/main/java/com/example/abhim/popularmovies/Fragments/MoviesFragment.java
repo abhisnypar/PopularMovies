@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,9 +22,9 @@ import android.widget.GridView;
 
 import com.example.abhim.popularmovies.Activities.DetailActivity;
 import com.example.abhim.popularmovies.Activities.TopRatedMoviesActivity;
+import com.example.abhim.popularmovies.Adapter.GridAdapter;
 import com.example.abhim.popularmovies.BuildConfig;
 import com.example.abhim.popularmovies.ModelClasses.DetailClass;
-import com.example.abhim.popularmovies.Adapter.GridAdapter;
 import com.example.abhim.popularmovies.R;
 
 import org.json.JSONArray;
@@ -42,11 +43,12 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
- * Created by abhim on 7/2/2016.
+ * Created by anusha on 6/7/2017.
  */
 public class MoviesFragment extends Fragment {
 
-    @InjectView(R.id.gridList_id)GridView moviesGridView;
+    @InjectView(R.id.gridList_id)
+    GridView moviesGridView;
     private GridAdapter moviesGridAdapter;
     private SharedPreferences mSettings;
     private SharedPreferences.Editor mEditor;
@@ -63,37 +65,46 @@ public class MoviesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.mainfragment, container, false);
         moviesGridAdapter = new GridAdapter(getContext());
-        ButterKnife.inject(this,rootView);
-        new PopularMoviesAsynTask().execute();
-        moviesGridView.setAdapter(moviesGridAdapter);
-        mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        mEditor = mSettings.edit();
-        mEditor.apply();
-        setHasOptionsMenu(true);
-        moviesGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int itemPosition = position;
+        ButterKnife.inject(this, rootView);
+        if (NetworkUtil.isNetWorkConnected(getContext())) {
+            new PopularMoviesAsynTask().execute();
+            moviesGridView.setAdapter(moviesGridAdapter);
+            mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            mEditor = mSettings.edit();
+            mEditor.apply();
+            setHasOptionsMenu(true);
+            moviesGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    int itemPosition = position;
 
-                Intent i = new Intent(view.getContext(), DetailActivity.class);
-                originalTitle = detailClass.get(position).getOriginalTitle();
-                movieSynopsis = detailClass.get(position).getMovieSynopsis();
-                movieDate = detailClass.get(position).getMovieDate();
-                moviesRating = detailClass.get(position).getMoviesRating();
-                posterImage = detailClass.get(position).getPosterImage();
-                i.putExtra("Position",itemPosition);
-                i.putExtra("Title", originalTitle);
-                i.putExtra("Synopsis", movieSynopsis);
-                i.putExtra("Date", movieDate);
-                i.putExtra("Rating", moviesRating);
-                i.putExtra("Image", posterImage);
-                startActivity(i);
-            }
-        });
-
+                    Intent i = new Intent(view.getContext(), DetailActivity.class);
+                    originalTitle = detailClass.get(position).getOriginalTitle();
+                    movieSynopsis = detailClass.get(position).getMovieSynopsis();
+                    movieDate = detailClass.get(position).getMovieDate();
+                    moviesRating = detailClass.get(position).getMoviesRating();
+                    posterImage = detailClass.get(position).getPosterImage();
+                    i.putExtra("Position", itemPosition);
+                    i.putExtra("Title", originalTitle);
+                    i.putExtra("Synopsis", movieSynopsis);
+                    i.putExtra("Date", movieDate);
+                    i.putExtra("Rating", moviesRating);
+                    i.putExtra("Image", posterImage);
+                    startActivity(i);
+                }
+            });
+        } else {
+            NetworkUtil.displayAlertDialog(getContext());
+        }
         return rootView;
     }
 
+    /**
+     * Shows the menu
+     *
+     * @param menu     the menu item from the settings banner.
+     * @param inflater this will helps to inflate the menu layout.
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_menu, menu);
@@ -103,30 +114,72 @@ public class MoviesFragment extends Fragment {
     public void onPrepareOptionsMenu(Menu menu) {
 
         menu.findItem(R.id.action_top_rated);
+        menu.getItem(0).setChecked(true);
         super.onPrepareOptionsMenu(menu);
     }
 
+    /**
+     * When the fragment is visible and touchable. This method will be called and we set
+     * the refresh for the screen.
+     */
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new PopularMoviesAsynTask().execute();
+                android.os.Handler handler = new android.os.Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                        moviesGridAdapter.notifyDataSetChanged();
+                    }
+                }, 2000);
+            }
+        });
+    }
+
+    /**
+     * When the options in the menu is clicked. Calls the Activity that corresponds to the manu item
+     * and marks the item that is clicked.
+     *
+     * @param item is the menu item
+     * @return super call.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
-        if (id == R.id.action_top_rated) {
-            Intent intent = new Intent(getContext(), TopRatedMoviesActivity.class);
-            startActivity(intent);
-            if (item.isChecked()) {
+        switch (item.getItemId()) {
+            case R.id.action_popular_movies:
                 item.setChecked(true);
-            } else {
-                item.setChecked(false);
-            }
+                break;
+            case R.id.action_top_rated:
+                final Intent intent = new Intent(getActivity(), TopRatedMoviesActivity.class);
+                intent.putExtra("Menu Item", item.getTitle());
+                startActivity(intent);
+                item.setChecked(true);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-
+    /**
+     * Asynchronous call to the service to fetch the data from the server
+     */
     public class PopularMoviesAsynTask extends AsyncTask<String, String, ArrayList<DetailClass>> {
 
         private final String LOG_TAG = PopularMoviesAsynTask.class.getSimpleName();
 
+        /**
+         * This method does the task in the background.
+         *
+         * @param params
+         * @return detail class object that the data is setted.
+         */
 
         @Override
         protected ArrayList<DetailClass> doInBackground(String... params) {
@@ -200,6 +253,13 @@ public class MoviesFragment extends Fragment {
             return null;
         }
 
+        /**
+         * Parse the json value in to the objects.
+         *
+         * @param moviesJsonStr is the JSON string from the http request.
+         * @return Array list of Detail class.
+         * @throws JSONException if there exists any exception while parsing json
+         */
         private ArrayList<DetailClass> getPopularMoviesDataFromJson(String moviesJsonStr) throws JSONException {
             //These are the names of the JSON object that need to be extracted.
 
@@ -232,7 +292,7 @@ public class MoviesFragment extends Fragment {
                 detailClassObject.setMovieDate(popularMovies.getString(POM_DATE));
                 detailClassObject.setMoviesRating(popularMovies.getDouble(POM_RATING));
                 detailClassObject.setPosterImage((imageUrl + popularMovies.getString(POM_BACKDROP_PATH)));
-                detailClassObject.setGridImage((imageUrl+popularMovies.getString(POM_POSTER_PATH)));
+                detailClassObject.setGridImage((imageUrl + popularMovies.getString(POM_POSTER_PATH)));
                 detailClass.add(detailClassObject);
 
             }
@@ -242,6 +302,11 @@ public class MoviesFragment extends Fragment {
             return detailClass;
         }
 
+        /**
+         * This will call the UI thread.
+         *
+         * @param result the result that comes from the do In back ground.
+         */
         @Override
         protected void onPostExecute(ArrayList<DetailClass> result) {
 

@@ -14,8 +14,13 @@
     <string name="action_popular_movies">Popular Movies</string>
     <string name="pref_string_default">Popular Movies</string>
     <string name="pref_string_movies">movies</string>
+    <string name="action_menu_share">ShareMovie</string>
 
     <string name="position">Position</string>
+    <string name="no_network_title">You are offline.</string>
+    <string name="no_network_message">Please come to the app once you are coonected to one of the networks.</string>
+    <string name="ok">OK.</string>
+    <string name="send_to">Sending to</string>
 
 
 </resources>

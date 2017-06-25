@@ -2,11 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.abhim.popularmovies.DetailFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <LinearLayout
             android:id="@+id/imageLayout"
@@ -67,6 +69,8 @@
                 android:elevation="@dimen/rating_bar_dimen"
                 android:numStars="10"
                 android:stepSize="0.5" />
+
+
 
         </RelativeLayout>
 

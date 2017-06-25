@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,6 +36,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -58,6 +60,7 @@ public class TopRatedFragment extends Fragment {
     private String posterImage;
     private ArrayList<DetailClass> detailClass;
     private DetailClass detailClassObject;
+    private Intent intent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,32 +73,37 @@ public class TopRatedFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.fragment_top_rated, container, false);
-        new TopRatedMoviesAsyncTask().execute();
-        ButterKnife.inject(this,rootView);
-        moviesGridAdapter = new GridAdapter(getContext());
-        moviesGridView.setAdapter(moviesGridAdapter);
-        mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        mEditor = mSettings.edit();
-        mEditor.apply();
-        setHasOptionsMenu(true);
-        moviesGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                originalTitle = detailClass.get(position).getOriginalTitle();
-                movieSynopsis = detailClass.get(position).getMovieSynopsis();
-                movieDate = detailClass.get(position).getMovieDate();
-                moviesRating = detailClass.get(position).getMoviesRating();
-                posterImage = detailClass.get(position).getPosterImage();
-                intent.putExtra("Position",position);
-                intent.putExtra("Title", originalTitle);
-                intent.putExtra("Synopsis", movieSynopsis);
-                intent.putExtra("Date", movieDate);
-                intent.putExtra("Rating", moviesRating);
-                intent.putExtra("Image", posterImage);
-                startActivity(intent);
-            }
-        });
+        if (NetworkUtil.isNetWorkConnected(getContext())) {
+            new TopRatedMoviesAsyncTask().execute();
+            ButterKnife.inject(this, rootView);
+            moviesGridAdapter = new GridAdapter(getContext());
+            moviesGridView.setAdapter(moviesGridAdapter);
+            mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            mEditor = mSettings.edit();
+            mEditor.apply();
+            setHasOptionsMenu(true);
+            moviesGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+                    originalTitle = detailClass.get(position).getOriginalTitle();
+                    movieSynopsis = detailClass.get(position).getMovieSynopsis();
+                    movieDate = detailClass.get(position).getMovieDate();
+                    moviesRating = detailClass.get(position).getMoviesRating();
+                    posterImage = detailClass.get(position).getPosterImage();
+                    intent.putExtra("Position", position);
+                    intent.putExtra("Title", originalTitle);
+                    intent.putExtra("Synopsis", movieSynopsis);
+                    intent.putExtra("Date", movieDate);
+                    intent.putExtra("Rating", moviesRating);
+                    intent.putExtra("Image", posterImage);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            NetworkUtil.displayAlertDialog(getContext());
+        }
+        intent = getActivity().getIntent();
         return rootView;
 
     }
@@ -106,17 +114,57 @@ public class TopRatedFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public void onPrepareOptionsMenu(Menu menu) {
+        /*
+        This menu item checked can be set to checked with out the intent also.
+        This is purely a showcase of using intent to send extras and creating a bundle to receive the
+        extras.
+         */
+        Bundle bundle = intent.getExtras();
+        String menuString = bundle.getString("Menu Item");
+        if (menuString != null && menuString.equals("Top Rated Movies")){
+            menu.getItem(1).setChecked(true);
+        }
 
-        int id = item.getItemId();
-        if (id == R.id.action_popular_movies) {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
-            if (item.isChecked()){
-                item.setChecked(true);
-            }else {
-                item.setChecked(false);
+        super.onPrepareOptionsMenu(menu);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        /*
+        Swipe refesh layout will add refresh on the screen.
+         */
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh_top_rated);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new TopRatedMoviesAsyncTask().execute();
+                android.os.Handler handler  = new android.os.Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                        moviesGridAdapter.notifyDataSetChanged();
+                    }
+                }, 2000);
             }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_popular_movies:
+                final Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra("Menu Item", item.getTitle());
+                startActivity(intent);
+                item.setChecked(true);
+                break;
+            case R.id.action_top_rated:
+                item.setChecked(true);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
