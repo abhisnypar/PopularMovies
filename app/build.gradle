@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.example.abhim.popularmovies"
         minSdkVersion 17
-        targetSdkVersion 23
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         manifestPlaceholders = [HOCKEYAPP_APP_ID: "0f781253e2fa404789a78b55ccbd0504"]
@@ -21,6 +21,7 @@ android {
     }
     buildTypes.each {
         it.buildConfigField 'String', 'POPULAR_MOVIES_API_KEY', "\"1f19c0f420eab0495d79f856d09c9a29\""
+        it.buildConfigField 'String', 'BASE_URL', '"https://api.themoviedb.org/3/"'
     }
 }
 repositories {
@@ -30,12 +31,16 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:27.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:support-v4:27.1.1'
     compile 'net.hockeyapp.android:HockeySDK:4.1.0'
     compile 'com.jakewharton:butterknife:5.1.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.google.code.gson:gson:2.7'
+
+    //ViewModel
+    compile "android.arch.lifecycle:extensions:1.1.0"
+    compile "android.arch.lifecycle:viewmodel:1.1.0"
 }

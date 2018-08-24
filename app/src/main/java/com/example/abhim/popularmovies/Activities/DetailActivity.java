@@ -31,9 +31,6 @@ import java.io.IOException;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-/**
- * Created by anusha on 7/11/2016.
- */
 public class DetailActivity extends AppCompatActivity {
 
     private int pos;
