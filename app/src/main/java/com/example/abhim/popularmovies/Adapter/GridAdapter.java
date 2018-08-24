@@ -9,36 +9,31 @@ import android.widget.ImageView;
 
 import com.example.abhim.popularmovies.ModelClasses.DetailClass;
 import com.example.abhim.popularmovies.R;
+import com.example.abhim.popularmovies.viewmodel.MovieInfoViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-/**
- * Created by anusha on 6/8/2017.
- */
 public class GridAdapter extends BaseAdapter {
 
-    public ArrayList<DetailClass> imagesUrlList;
     Context context;
+    private MovieInfoViewModel movieInfoViewModel;
 
     public GridAdapter(Context c) {
         context = c;
-        imagesUrlList = new ArrayList<>();
-        Collections.addAll(imagesUrlList);
     }
 
     @Override
     public int getCount() {
-        return imagesUrlList.size();
+        return movieInfoViewModel.getDetailClass().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return imagesUrlList.get(position);
+        return movieInfoViewModel.getDetailClass().get(position);
     }
 
     @Override
@@ -48,11 +43,12 @@ public class GridAdapter extends BaseAdapter {
 
     public class ViewHolder {
 
-        @InjectView(R.id.grid_imageView_id)ImageView imgView;
+        @InjectView(R.id.grid_imageView_id)
+        ImageView imgView;
 
         public ViewHolder(View v) {
 
-            ButterKnife.inject(this,v);
+            ButterKnife.inject(this, v);
         }
     }
 
@@ -70,15 +66,20 @@ public class GridAdapter extends BaseAdapter {
             holder = (ViewHolder) rootView.getTag();
         }
 
-        Picasso.with(context).load(imagesUrlList.get(position).getGridImage())
+        final String imageUrl = "http://image.tmdb.org/t/p/w185" + movieInfoViewModel.getDetailClass().get(position).getPoster_path();
+        Picasso.with(context).load(imageUrl)
                 .placeholder(R.drawable.ramboo).fit()
                 .into(holder.imgView);
         return rootView;
     }
 
     public void clear(ArrayList<DetailClass> imagesUrlList) {
-        this.imagesUrlList.clear();
-        this.imagesUrlList.addAll(imagesUrlList);
-        notifyDataSetChanged();
+//        this.imagesUrlList.clear();
+//        this.imagesUrlList.addAll(imagesUrlList);
+//        notifyDataSetChanged();
+    }
+
+    public void setData(final MovieInfoViewModel movieInfoViewModel) {
+        this.movieInfoViewModel = movieInfoViewModel;
     }
 }
