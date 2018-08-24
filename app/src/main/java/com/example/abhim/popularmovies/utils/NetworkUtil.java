@@ -1,4 +1,4 @@
-package com.example.abhim.popularmovies.Fragments;
+package com.example.abhim.popularmovies.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -8,9 +8,6 @@ import android.net.NetworkInfo;
 
 import com.example.abhim.popularmovies.R;
 
-/**
- * Created by anusha on 6/20/17.
- */
 public class NetworkUtil {
 
     public static boolean isNetWorkConnected(Context mContext) {

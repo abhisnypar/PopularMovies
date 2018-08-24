@@ -1,5 +1,6 @@
 package com.example.abhim.popularmovies.Activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.abhim.popularmovies.ModelClasses.DetailClass;
 import com.example.abhim.popularmovies.R;
+import com.example.abhim.popularmovies.viewmodel.MovieInfoViewModel;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -31,9 +33,6 @@ import java.io.IOException;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-/**
- * Created by anusha on 7/11/2016.
- */
 public class DetailActivity extends AppCompatActivity {
 
     private int pos;
@@ -56,6 +55,7 @@ public class DetailActivity extends AppCompatActivity {
     private double rating;
     private Uri localBitmap;
     private ShareActionProvider miShareAction;
+    private MovieInfoViewModel movieInfoViewModel;
 
 
     @Override
@@ -67,13 +67,14 @@ public class DetailActivity extends AppCompatActivity {
         setTheme(R.style.MyActionButtonOverflow);
         ButterKnife.inject(this);
         final Bundle extras = getIntent().getExtras();
+        movieInfoViewModel = ViewModelProviders.of(this).get(MovieInfoViewModel.class);
         if (extras != null) {
-            pos = extras.getInt("Position");
-            title = extras.getString("Title");
-            image = extras.getString("Image");
-            synopsis = extras.getString("Synopsis");
-            rating = extras.getDouble("Rating");
-            release_date = extras.getString("Date");
+            pos = extras.getInt("position");
+            title = movieInfoViewModel.getDetailClass().get(pos).getOriginal_title();
+            image = "http://image.tmdb.org/t/p/w185" + movieInfoViewModel.getDetailClass().get(pos).getBackdrop_path();
+            synopsis = movieInfoViewModel.getDetailClass().get(pos).getOverview();
+            rating = movieInfoViewModel.getDetailClass().get(pos).getVote_average();
+            release_date = movieInfoViewModel.getDetailClass().get(pos).getRelease_date();
 
         }
         titleTextView.setText(title);

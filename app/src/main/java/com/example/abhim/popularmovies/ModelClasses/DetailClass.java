@@ -1,64 +1,86 @@
 package com.example.abhim.popularmovies.ModelClasses;
 
-/**
- * Created by anusha on 6/11/2017.
- */
-public class DetailClass  {
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public String originalTitle;
-    public String movieSynopsis;
-    public String movieDate;
-    public double moviesRating;
-    public String posterImage;
-    public String gridImage;
+public class DetailClass {
 
+    @SerializedName("original_title")
+    @Expose
+    private String original_title;
+    @SerializedName("overview")
+    @Expose
+    private String overview;
+    @SerializedName("release_date")
+    @Expose
+    private String release_date;
+    @SerializedName("vote_average")
+    @Expose
+    private double vote_average;
+    @SerializedName("backdrop_pat")
+    @Expose
+    private String backdrop_path;
+    @SerializedName("poster_path")
+    @Expose
+    private String poster_path;
 
-    public String getGridImage() {
-        return gridImage;
+    public DetailClass() {
     }
 
-    public void setGridImage(String gridImage) {
-        this.gridImage = gridImage;
+    public DetailClass(String original_title, String overview, String release_date, double vote_average, String backdrop_path, String poster_path) {
+        this.original_title = original_title;
+        this.overview = overview;
+        this.release_date = release_date;
+        this.vote_average = vote_average;
+        this.backdrop_path = backdrop_path;
+        this.poster_path = poster_path;
     }
 
-    public String getOriginalTitle() {
-        return originalTitle;
+    public String getPoster_path() {
+        return poster_path;
     }
 
-    public void setOriginalTitle(String originalTitle) {
-        this.originalTitle = originalTitle;
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
     }
 
-    public String getMovieSynopsis() {
-        return movieSynopsis;
+    public String getOriginal_title() {
+        return original_title;
     }
 
-    public void setMovieSynopsis(String movieSynopsis) {
-        this.movieSynopsis = movieSynopsis;
+    public void setOriginal_title(String original_title) {
+        this.original_title = original_title;
     }
 
-    public String getMovieDate() {
-        return movieDate;
+    public String getOverview() {
+        return overview;
     }
 
-    public void setMovieDate(String movieDate) {
-        this.movieDate = movieDate;
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
-    public double getMoviesRating() {
-        return moviesRating;
+    public String getRelease_date() {
+        return release_date;
     }
 
-    public void setMoviesRating(double moviesRating) {
-        this.moviesRating = moviesRating;
+    public void setRelease_date(String release_date) {
+        this.release_date = release_date;
     }
 
-    public String getPosterImage() {
-        return posterImage;
+    public double getVote_average() {
+        return vote_average;
     }
 
-    public void setPosterImage(String posterImage) {
-        this.posterImage = posterImage;
+    public void setVote_average(double vote_average) {
+        this.vote_average = vote_average;
     }
 
+    public String getBackdrop_path() {
+        return backdrop_path;
+    }
+
+    public void setBackdrop_path(String backdrop_path) {
+        this.backdrop_path = backdrop_path;
+    }
 }
