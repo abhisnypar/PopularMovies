@@ -23,6 +23,9 @@ android {
         it.buildConfigField 'String', 'POPULAR_MOVIES_API_KEY', "\"1f19c0f420eab0495d79f856d09c9a29\""
         it.buildConfigField 'String', 'BASE_URL', '"https://api.themoviedb.org/3/"'
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 repositories {
     jcenter()
@@ -41,6 +44,10 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
 
     //ViewModel
-    compile "android.arch.lifecycle:extensions:1.1.0"
-    compile "android.arch.lifecycle:viewmodel:1.1.0"
+    compile 'android.arch.lifecycle:extensions:1.1.0'
+    compile 'android.arch.lifecycle:viewmodel:1.1.0'
+
+    //Rxjava
+    compile 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    compile 'io.reactivex.rxjava2:rxjava:2.2.2'
 }

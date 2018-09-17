@@ -1,5 +1,6 @@
 package com.example.abhim.popularmovies.Fragments;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,31 +20,32 @@ import android.widget.GridView;
 
 import com.example.abhim.popularmovies.Activities.TopRatedMoviesActivity;
 import com.example.abhim.popularmovies.Adapter.GridAdapter;
-import com.example.abhim.popularmovies.BuildConfig;
 import com.example.abhim.popularmovies.ModelClasses.DetailClass;
 import com.example.abhim.popularmovies.ModelClasses.ResultsResponseBody;
 import com.example.abhim.popularmovies.R;
-import com.example.abhim.popularmovies.restful.RestServiceController;
-import com.example.abhim.popularmovies.restful.RetrofitServiceInterface;
+import com.example.abhim.popularmovies.rx2.MoviesAsyncTask;
 import com.example.abhim.popularmovies.viewmodel.MovieInfoViewModel;
 
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
-public class MoviesFragment extends Fragment implements Callback<ResultsResponseBody> {
+public class MoviesFragment extends Fragment {
 
-    @InjectView(R.id.gridList_id)
-    GridView moviesGridView;
     private GridAdapter moviesGridAdapter;
     private ArrayList<DetailClass> detailClassObject;
     private MovieInfoViewModel movieInfoViewModel;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
+    @InjectView(R.id.gridList_id)
+    GridView moviesGridView;
+
+    @SuppressLint("CheckResult")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
@@ -54,10 +56,20 @@ public class MoviesFragment extends Fragment implements Callback<ResultsResponse
         movieInfoViewModel = ViewModelProviders.of(this).get(MovieInfoViewModel.class);
         if (NetworkUtil.isNetWorkConnected(getContext())) {
 
-            Retrofit restServiceController = RestServiceController.getRestController(BuildConfig.BASE_URL);
-            final RetrofitServiceInterface retrofitServiceInterface = restServiceController.create(RetrofitServiceInterface.class);
-            final Call<ResultsResponseBody> detailClassCall = retrofitServiceInterface.getPopularMovies(BuildConfig.POPULAR_MOVIES_API_KEY);
-            detailClassCall.enqueue(this);
+            compositeDisposable.add(
+                    new MoviesAsyncTask().getPopularMovies()
+                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<ResultsResponseBody>() {
+                                @Override
+                                public void accept(ResultsResponseBody resultsResponseBody) {
+                                    try {
+                                        onResponse(resultsResponseBody);
+                                    } catch (Exception e) {
+                                        onFailure(e);
+                                    }
+                                }
+                            }));
 
             final SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
             SharedPreferences.Editor mEditor = mSettings.edit();
@@ -119,7 +131,7 @@ public class MoviesFragment extends Fragment implements Callback<ResultsResponse
      * When the options in the menu is clicked. Calls the Activity that corresponds to the manu item
      * and marks the item that is clicked.
      *
-     * @param item is the menu item
+     * @param item is the menu item\
      * @return super call.
      */
     @Override
@@ -140,15 +152,20 @@ public class MoviesFragment extends Fragment implements Callback<ResultsResponse
     }
 
     @Override
-    public void onResponse(Call<ResultsResponseBody> call, Response<ResultsResponseBody> response) {
-        detailClassObject = response.body().getDetailClass();
+    public void onDestroy() {
+        super.onDestroy();
+        if (!compositeDisposable.isDisposed())
+            compositeDisposable.dispose();
+    }
+
+    public void onResponse(ResultsResponseBody resultsResponseBody) {
+        detailClassObject = resultsResponseBody.getDetailClass();
         movieInfoViewModel.setDetailClass(detailClassObject);
         moviesGridAdapter.setData(movieInfoViewModel);
         moviesGridView.setAdapter(moviesGridAdapter);
     }
 
-    @Override
-    public void onFailure(Call<ResultsResponseBody> call, Throwable t) {
+    public void onFailure(Throwable t) {
         Log.d("tag", t.getMessage());
     }
 }
